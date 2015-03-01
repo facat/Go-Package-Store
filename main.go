@@ -255,6 +255,23 @@ func mainHandler(w http.ResponseWriter, req *http.Request) {
 		flusher.Flush()
 
 		//fmt.Printf("Part 2b: %v ms.\n", time.Since(started2).Seconds()*1000)
+
+		/*log.Println("WriteRepoHtml")
+		goon.DumpExpr(repoPresenter.Repo().ImportPathPattern())
+		goon.DumpExpr(repoPresenter.Repo().ImportPaths())
+		goon.DumpExpr(len(repoPresenter.Repo().GoPackages()))
+		goon.DumpExpr(repoPresenter.Repo().GoPackages()[0].Bpkg.ImportPath)
+		goon.DumpExpr(repoPresenter.Repo().GoPackages()[0].Dir.Repo.VcsLocal.LocalRev)
+		goon.DumpExpr(repoPresenter.Repo().GoPackages()[0].Dir.Repo.VcsRemote.RemoteRev)
+		goon.DumpExpr(repoPresenter.HomePage())
+		goon.DumpExpr(repoPresenter.Image())
+		var changes []presenter.Change
+		if changesChan := repoPresenter.Changes(); changesChan != nil {
+			for c := range changesChan {
+				changes = append(changes, c)
+			}
+		}
+		goon.DumpExpr(changes)*/
 	}
 
 	if updatesAvailable == 0 {
@@ -344,6 +361,7 @@ func main() {
 	//goon.DumpExpr(os.Getenv("PATH"), os.Getenv("GOPATH"))
 
 	http.HandleFunc("/index.html", mainHandler)
+	http.HandleFunc("/mock.html", mockHandler)
 	http.HandleFunc("/-/update", updateHandler)
 	http.Handle("/favicon.ico/", http.NotFoundHandler())
 	http.Handle("/assets/", http.FileServer(http.Dir(".")))
